@@ -4,32 +4,83 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [items, setItems] = useState([
+    { id: 1, text: "Learn React", done: false },
+    { id: 2, text: "Build a List App", done: true },
+  ]);
+
+  const [input, setInput] = useState("");
+
+  // Add item
+  const addItem = () => {
+    if (input.trim() === "") return;
+
+    const newItem = {
+      id: Date.now(),
+      text: input,
+      done: false,
+    };
+
+    setItems([...items, newItem]);
+    setInput("");
+  };
+
+  // Toggle done
+  const toggleItem = (id) => {
+    setItems(
+      items.map((item) =>
+        item.id === id ? { ...item, done: !item.done } : item
+      )
+    );
+  };
+
+  // Delete item
+  const deleteItem = (id) => {
+    setItems(items.filter((item) => item.id !== id));
+  };
+
+  const totalCount = items.length;
+  const completedCount = items.filter((item) => item.done).length;
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ padding: "1rem" }}>
+      <h1>List App</h1>
+      <h3>
+        Total: {totalCount} | Completed: {completedCount}
+      </h3>
+
+      <input
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Add item..."
+      />
+      <button onClick={addItem}>Add</button>
+
+      <ul>
+        {items.map((item) => (
+          <li
+            key={item.id}
+            onClick={() => toggleItem(item.id)}
+            style={{
+              cursor: "pointer",
+              textDecoration: item.done ? "line-through" : "none",
+            }}
+          >
+            {item.text}
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // prevents toggle
+                deleteItem(item.id);
+              }}
+              style={{ marginLeft: "1rem" }}
+            >
+              X
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default App
+export default App;
