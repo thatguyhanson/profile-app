@@ -1,7 +1,8 @@
+import "./Introduction.css"
 
-const About = () => {
-
+const Introduction = () => {
+    
     return ();
 }
 
-export default function About;
+export default function Introduction;
