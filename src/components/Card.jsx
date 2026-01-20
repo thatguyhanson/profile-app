@@ -1,12 +1,13 @@
-import hanson from "../assets/hanson.png" // Replace 'image' variable and file path to image
+import hanson from "../assets/hanson.png"
+import "./Card.css"
 
 const Card = () => {
     const name = "Hanson";
     const title = "Web Developer";
 
     return (
-        <div>
-            <img src={hanson} alt="Hanson"/> // Replace image variable
+        <div className="card">
+            <img src={hanson} alt="Hanson" className="avatar"/>
             <p>{name}</p>
             <p>{title}</p>
         </div>
