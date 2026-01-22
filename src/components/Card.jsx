@@ -1,13 +1,9 @@
-import hanson from "../assets/hanson.png"
 import "./Card.css"
 
-const Card = () => {
-    const name = "Hanson";
-    const title = "Web Developer";
-
+const Card = ({ name, title, image }) => {
     return (
         <div className="card">
-            <img src={hanson} alt="Hanson" className="avatar"/>
+            <img src={image} alt={name} />
             <p>{name}</p>
             <p>{title}</p>
         </div>
