@@ -9,6 +9,7 @@ import mako from './assets/mako.jpg'
 import milo from './assets/milo.jpeg'
 import huh from './assets/confusedCat.jpeg'
 import daBusDriver from './assets/daBusDriver.png'
+import kat from './assets/katy.jpg'
 import './App.css'
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
         {id: 1, name: "Mako", title: "Fat Cat", image: mako},
         {id: 2, name: "Milo", title: "Hair Eater", image: milo},
         {id: 3, name: "Huh", title: "Confused Cat", image: huh},
-        {id: 4, name: "Da Bus Driver", title: "Bus Driver", image: daBusDriver}
+        {id: 4, name: "Da Bus Driver", title: "Bus Driver", image: daBusDriver},
+        {id : 5, name: "Dr. House", title: "Cat Owner", image: kat}
     ]
 
     const titles = [...new Set(profiles.map(profile => profile.title))];
