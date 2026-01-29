@@ -8,7 +8,7 @@ import hanson from './assets/hanson.png'
 import mako from './assets/mako.jpg'
 import milo from './assets/milo.jpeg'
 import huh from './assets/confusedCat.jpeg'
-import daBusDriver from './assets/daBusDriver.png'
+import daBusDriver from './assets/dabusdriver.png'
 import kat from './assets/katy.jpg'
 import './App.css'
 
@@ -48,10 +48,16 @@ function App() {
         (profile.title === title || !title) && (profile.name.toLowerCase().includes(name.toLowerCase()) || !name)
     );
 
+    const [styles, setStyles] = useState("dark-mode");
+
+    const toggleStyles = () => {
+        setStyles(styles === "dark-mode" ? "light-mode" : "dark-mode");
+    }
+
     return (
-        <>
+        <div className={styles}>
             <Wrapper id="header">
-                <Header />
+                <Header toggleStyles={toggleStyles} currentStyle={styles} />
             </Wrapper>
             <Wrapper id="about">
                 <Intro />
@@ -74,7 +80,8 @@ function App() {
             <footer className="footer">
                 <p>Any people shown in this project have given express permission for me to use their images or their images are available online.</p>
             </footer>
-        </>
+        </div>
     )
 }
+
 export default App;

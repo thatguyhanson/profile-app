@@ -1,8 +1,17 @@
 #root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section {
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 0 2rem;
 }
 
 .logo {
@@ -49,6 +58,30 @@
     flex-direction: row;
 }
 
+.filter-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-dropdown select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.filter-search {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-search input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
 .grids {
     display: flex;
     flex-wrap: wrap;
@@ -61,4 +94,29 @@
     margin-top: 32px;
     font-size: 0.8rem;
     color: #666;
+}
+
+.filter {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.dark-mode {
+    --bg-color: #242424;
+    --text-color: #ffffff;
+    background-color: #242424;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.light-mode {
+    --bg-color: #ffffff;
+    --text-color: #213547;
+    background-color: #ffffff;
+    color: #213547;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
