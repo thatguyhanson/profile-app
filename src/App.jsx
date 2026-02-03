@@ -4,6 +4,7 @@ import Intro from './components/Introduction'
 import Wrapper from './components/Wrapper'
 import Header from './components/Header'
 import Filters from './components/Filters'
+import ProfileForm from './components/ProfileForm'
 import hanson from './assets/hanson.png'
 import mako from './assets/mako.jpg'
 import milo from './assets/milo.jpeg'
@@ -14,14 +15,14 @@ import './App.css'
 
 function App() {
 
-    const profiles = [
-        {id: 0, name: "Hanson", title: "Web Developer", image: hanson},
-        {id: 1, name: "Mako", title: "Fat Cat", image: mako},
-        {id: 2, name: "Milo", title: "Hair Eater", image: milo},
-        {id: 3, name: "Huh", title: "Confused Cat", image: huh},
-        {id: 4, name: "Da Bus Driver", title: "Bus Driver", image: daBusDriver},
-        {id : 5, name: "Dr. House", title: "Cat Owner", image: kat}
-    ]
+    const [profiles, setProfiles] = useState([
+        {id: 0, name: "Hanson", title: "Web Developer", email: "huan1826@purdue.edu", bio: "", image: hanson},
+        {id: 1, name: "Mako", title: "Fat Cat", email: "mako@meow.com", bio: "meow.", image: mako},
+        {id: 2, name: "Milo", title: "Hair Eater", email: "milo@meow.com", bio: "meow", image: milo},
+        {id: 3, name: "Huh", title: "Confused Cat", email: "", bio: "",image: huh},
+        {id: 4, name: "Da Bus Driver", title: "Bus Driver", email: "", bio: "", image: daBusDriver},
+        {id: 5, name: "Dr. House", title: "Cat Owner", email: "", bio: "", image: kat}
+    ]);
 
     const titles = [...new Set(profiles.map(profile => profile.title))];
 
@@ -54,6 +55,10 @@ function App() {
         setStyles(styles === "dark-mode" ? "light-mode" : "dark-mode");
     }
 
+    const updateProfiles = (profile) => {
+        setProfiles(pre => ([...pre, profile]))
+    }
+
     return (
         <div className={styles}>
             <Wrapper id="header">
@@ -61,6 +66,9 @@ function App() {
             </Wrapper>
             <Wrapper id="about">
                 <Intro />
+            </Wrapper>
+            <Wrapper id="add-profile">
+                <ProfileForm onAddProfile={updateProfiles}/>
             </Wrapper>
             <Wrapper id="profiles">
                 <div className="filter">
