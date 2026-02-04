@@ -33,6 +33,12 @@ export default function ProfileFor({ onAddProfile }) {
         event.preventDefault();
         setSubmitted(true);
         try {
+            if (!image) {
+                setError("Please upload an image.");
+                setSubmitted(false);
+                return;
+            }
+
             if (!stripTags(trimCollapse(name))
                 || !stripTags(trimCollapse(title))
                 || !stripTags(trimCollapse(email))
@@ -51,8 +57,11 @@ export default function ProfileFor({ onAddProfile }) {
 
             onAddProfile(cleanedData);
 
-            setValues({ name: "", title: "", email: "", bio: "", image: null })
+            setValues({ name: "", title: "", email: "", bio: "", image: null });
             setError("");
+
+            event.target.reset();
+
             setSuccess("Form is submitted successfully");
             setTimeout(() => {
                 setSuccess("");
