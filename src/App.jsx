@@ -5,6 +5,7 @@ import Wrapper from './components/Wrapper'
 import Header from './components/Header'
 import Filters from './components/Filters'
 import ProfileForm from './components/ProfileForm'
+import FetchedProfiles from './components/FetchedProfiles'
 import hanson from './assets/hanson.png'
 import mako from './assets/mako.jpg'
 import milo from './assets/milo.jpeg'
@@ -66,6 +67,9 @@ function App() {
             </Wrapper>
             <Wrapper id="about">
                 <Intro />
+            </Wrapper>
+            <Wrapper>
+                <FetchedProfiles />
             </Wrapper>
             <Wrapper id="add-profile">
                 <ProfileForm onAddProfile={updateProfiles}/>
