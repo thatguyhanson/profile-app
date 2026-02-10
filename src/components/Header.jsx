@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './header.module.css'
 
 export default function Header({ toggleStyles, currentStyle }) {
@@ -5,9 +6,10 @@ export default function Header({ toggleStyles, currentStyle }) {
     return (
         <header className={styles.header}>
             <nav className={styles.navBar}>
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#work">Work</a>
+                <Link to="/">Home</Link>
+                <Link to="/profiles">Profiles</Link>
+                <Link to="/add-profile">Add Profile</Link>
+                <Link to="/about">About</Link>
             </nav>
             <nav>
                 <button onClick={toggleStyles} className={styles.darkModeToggle}>
