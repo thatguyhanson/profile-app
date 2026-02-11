@@ -7,12 +7,6 @@ const OtherProfiles = ({ profiles }) => (
         <h2>Remote Profiles</h2>
         <FetchedProfiles />
         <hr />
-        <h2>Local Profiles</h2>
-        <div className="grids">
-            {profiles.map(profile => (
-                <Card key={profile.id} {...profile} />
-            ))}
-        </div>
     </Wrapper>
 );
 

@@ -72,7 +72,7 @@ function App() {
                 </Wrapper>
 
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<Home profiles={profiles} />} />
                     <Route path="/profiles" element={<OtherProfiles profiles={profiles} />} />
                     <Route path="/add-profile" element={<AddProfile onAddProfile={updateProfiles} />} />
                     <Route path="/about" element={<About />} />

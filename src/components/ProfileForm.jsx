@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from './profileform.module.css'
 
 const stripTags = (s) => String(s ?? "").replace(/<\/?[^>]+>/g, "");
 const trimCollapse = (s) => String(s ?? "").trim().replace(/\s+/g, " ");
@@ -81,25 +82,27 @@ export default function ProfileFor({ onAddProfile }) {
         || error;
 
     return (
-        <form onSubmit={handleSubmit} className="">
-            <label htmlFor="name">Name</label>
-            <input id="name" name="name" required value={name} onChange={handleChange} />
+        <div className={styles.formContainer}>
+            <form onSubmit={handleSubmit} className={styles.profileForm}>
+                <label htmlFor="name">Name</label>
+                <input id="name" name="name" required value={name} onChange={handleChange} />
 
-            <label htmlFor="email">Email</label>
-            <input id="email" name="email" required value={email} onChange={handleChange} />
+                <label htmlFor="email">Email</label>
+                <input id="email" name="email" required value={email} onChange={handleChange} />
 
-            <label htmlFor="title">Title</label>
-            <input id="title" name="title" type="text" required value={title} onChange={handleChange} />
+                <label htmlFor="title">Title</label>
+                <input id="title" name="title" type="text" required value={title} onChange={handleChange} />
 
-            <label htmlFor="bio">Bio</label>
-            <textarea id="bio" name="bio" value={bio} maxLength={200} onChange={handleChange} />
+                <label htmlFor="bio">Bio</label>
+                <textarea id="bio" name="bio" value={bio} maxLength={200} onChange={handleChange} />
 
-            <label htmlFor="image">Upload a profile image:</label>
-            <input id="image" name="image" type="file" accept="image/*" required onChange={handleChange} />
+                <label htmlFor="image">Upload a profile image:</label>
+                <input id="image" name="image" type="file" accept="image/*" required onChange={handleChange} />
 
-            <button disabled={disabled}>Submit</button>
-            {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
-        </form>
+                <button disabled={disabled}>Submit</button>
+                {error && <p className={styles.error}>{error}</p>}
+                {success && <p className={styles.success}>{success}</p>}
+            </form>
+        </div>
     );
 }
