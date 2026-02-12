@@ -1,6 +1,6 @@
-import Introduction from '../components/Introduction'
-import Wrapper from '../components/Wrapper'
-import Card from '../components/Card'
+import Introduction from '../components/Introduction';
+import Wrapper from '../components/Wrapper';
+import Card from '../components/Card';
 
 const Home = ( {profiles} ) => {
     return (

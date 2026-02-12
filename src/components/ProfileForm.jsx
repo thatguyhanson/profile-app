@@ -1,10 +1,13 @@
 import { useState } from "react";
-import styles from './profileform.module.css'
+import styles from './profileform.module.css';
+import { useNavigate } from "react-router-dom";
 
 const stripTags = (s) => String(s ?? "").replace(/<\/?[^>]+>/g, "");
 const trimCollapse = (s) => String(s ?? "").trim().replace(/\s+/g, " ");
 
 export default function ProfileFor({ onAddProfile }) {
+
+    const Navigate = useNavigate();
 
     const [values, setValues] = useState({ name: "", title: "", email: "", bio: "", image: null });
     const [error, setError] = useState("");
@@ -66,6 +69,7 @@ export default function ProfileFor({ onAddProfile }) {
             setSuccess("Form is submitted successfully");
             setTimeout(() => {
                 setSuccess("");
+                Navigate("/")
             }, 1000);
         } catch (error) {
             setError(error.message);

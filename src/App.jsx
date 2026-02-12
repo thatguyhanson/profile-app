@@ -8,6 +8,8 @@ import AddProfile from './pages/AddProfile';
 import OtherProfiles from './pages/OtherProfiles';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
+import ProfileDetailPage from './pages/ProfileDetailPage'
+import ProfileLayoutPage from './pages/ProfileLayoutPage'
 
 // Assets
 import hanson from './assets/hanson.png'
@@ -73,7 +75,10 @@ function App() {
 
                 <Routes>
                     <Route path="/" element={<Home profiles={profiles} />} />
-                    <Route path="/profiles" element={<OtherProfiles profiles={profiles} />} />
+                    <Route path="/fetched-profiles" element={<OtherProfiles profiles={profiles} />} />
+                    <Route path="/fetched-profiles/profile" element={<ProfileLayoutPage />}>
+                        <Route path=":id" element={<ProfileDetailPage />} />
+                    </Route>
                     <Route path="/add-profile" element={<AddProfile onAddProfile={updateProfiles} />} />
                     <Route path="/about" element={<About />} />
 
