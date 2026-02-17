@@ -1,8 +1,15 @@
-import { useState } from 'react'
+// React
+import { useState , useContext, use} from 'react'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+
+// Components
 import Wrapper from './components/Wrapper'
 import Header from './components/Header'
 
+// Context
+import ModeContext from './context/ModeContext';
+
+// Pages
 import Home from './pages/HomePage'
 import AddProfile from './pages/AddProfile';
 import OtherProfiles from './pages/OtherProfiles';
@@ -56,11 +63,7 @@ function App() {
         (profile.title === title || !title) && (profile.name.toLowerCase().includes(name.toLowerCase()) || !name)
     );
 
-    const [styles, setStyles] = useState("dark-mode");
-
-    const toggleStyles = () => {
-        setStyles(styles === "dark-mode" ? "light-mode" : "dark-mode");
-    }
+    const {styles} = useContext(ModeContext);
 
     const updateProfiles = (profile) => {
         setProfiles(pre => ([...pre, profile]))
@@ -70,7 +73,7 @@ function App() {
         <Router>
             <div className={styles}>
                 <Wrapper id="header">
-                    <Header toggleStyles={toggleStyles} currentStyle={styles} />
+                    <Header/>
                 </Wrapper>
 
                 <Routes>

@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import styles from './header.module.css';
+import { useContext } from 'react';
+import ModeContext from '../context/ModeContext';
 
-export default function Header({ toggleStyles, currentStyle }) {
+export default function Header() {
+    const { styles: theme, toggleStyles } = useContext(ModeContext);
 
     return (
         <header className={styles.header}>
@@ -13,7 +16,7 @@ export default function Header({ toggleStyles, currentStyle }) {
             </nav>
             <nav>
                 <button onClick={toggleStyles} className={styles.darkModeToggle}>
-                    {currentStyle === "dark-mode" ? "Light Mode" : "Dark Mode"}
+                    {theme === "dark-mode" ? "Light Mode" : "Dark Mode"}
                 </button>
             </nav>
         </header>
