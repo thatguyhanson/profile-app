@@ -1,19 +1,64 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import styles from './profileform.module.css';
 import { useNavigate } from "react-router-dom";
 
 const stripTags = (s) => String(s ?? "").replace(/<\/?[^>]+>/g, "");
 const trimCollapse = (s) => String(s ?? "").trim().replace(/\s+/g, " ");
 
+// Reducer function to manage complex form state
+const formReducer = (state, action) => {
+    switch (action.type) {
+        case 'UPDATE_FIELD':
+            return {
+                ...state,
+                values: { ...state.values, [action.field]: action.payload }
+            };
+        case 'UPDATE_IMAGE':
+            return {
+                ...state,
+                values: { ...state.values, image: action.payload }
+            };
+        case 'SET_ERROR':
+            return {
+                ...state,
+                error: action.payload
+            };
+        case 'SET_SUBMITTED':
+            return {
+                ...state,
+                submitted: action.payload
+            };
+        case 'SET_SUCCESS':
+            return {
+                ...state,
+                success: action.payload
+            };
+        case 'RESET_FORM':
+            return {
+                values: { name: "", title: "", email: "", bio: "", image: null },
+                error: "",
+                submitted: false,
+                success: ""
+            };
+        default:
+            return state;
+    }
+};
+
 export default function ProfileFor({ onAddProfile }) {
 
     const Navigate = useNavigate();
 
-    const [values, setValues] = useState({ name: "", title: "", email: "", bio: "", image: null });
-    const [error, setError] = useState("");
-    const [submitted, setSubmitted] = useState(false);
-    const [success, setSuccess] = useState(false);
+    // Initial state for the form
+    const initialState = {
+        values: { name: "", title: "", email: "", bio: "", image: null },
+        error: "",
+        submitted: false,
+        success: ""
+    };
 
+    const [state, dispatch] = useReducer(formReducer, initialState);
+    const { values, error, submitted, success } = state;
     const { name, title, email, bio, image } = values;
 
     const handleChange = (event) => {
@@ -22,24 +67,24 @@ export default function ProfileFor({ onAddProfile }) {
         if (name === "image") {
             const file = files[0];
             if (file && file.size < 1024 * 1024) {
-                setValues(prev => ({ ...prev, image: file }));
-                setError("");
+                dispatch({ type: 'UPDATE_IMAGE', payload: file });
+                dispatch({ type: 'SET_ERROR', payload: "" });
             } else {
-                setError("Image should be less than 1 MB.");
-                setValues(prev => ({ ...prev, image: null }));
+                dispatch({ type: 'SET_ERROR', payload: "Image should be less than 1 MB." });
+                dispatch({ type: 'UPDATE_IMAGE', payload: null });
             }
         } else {
-            setValues(prev => ({ ...prev, [name]: value }));
+            dispatch({ type: 'UPDATE_FIELD', field: name, payload: value });
         }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setSubmitted(true);
+        dispatch({ type: 'SET_SUBMITTED', payload: true });
         try {
             if (!image) {
-                setError("Please upload an image.");
-                setSubmitted(false);
+                dispatch({ type: 'SET_ERROR', payload: "Please upload an image." });
+                dispatch({ type: 'SET_SUBMITTED', payload: false });
                 return;
             }
 
@@ -47,7 +92,7 @@ export default function ProfileFor({ onAddProfile }) {
                 || !stripTags(trimCollapse(title))
                 || !stripTags(trimCollapse(email))
                 || !stripTags(trimCollapse(bio))) {
-                setError("Please fill in name, title, e-mail, and description.");
+                dispatch({ type: 'SET_ERROR', payload: "Please fill in name, title, e-mail, and description." });
                 return;
             }
             const cleanedData = {
@@ -61,20 +106,19 @@ export default function ProfileFor({ onAddProfile }) {
 
             onAddProfile(cleanedData);
 
-            setValues({ name: "", title: "", email: "", bio: "", image: null });
-            setError("");
+            dispatch({ type: 'RESET_FORM' });
 
             event.target.reset();
 
-            setSuccess("Form is submitted successfully");
+            dispatch({ type: 'SET_SUCCESS', payload: "Form is submitted successfully" });
             setTimeout(() => {
-                setSuccess("");
+                dispatch({ type: 'SET_SUCCESS', payload: "" });
                 Navigate("/")
             }, 1000);
         } catch (error) {
-            setError(error.message);
+            dispatch({ type: 'SET_ERROR', payload: error.message });
         } finally {
-            setSubmitted(false);
+            dispatch({ type: 'SET_SUBMITTED', payload: false });
         }
     }
 

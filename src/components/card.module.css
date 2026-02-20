@@ -8,6 +8,7 @@
     height: 150px;
     justify-content: center;
     border-radius: 8px;
+    position: relative;
 }
 
 .card p {
@@ -18,4 +19,22 @@
     width: 75px;
     height: 75px;
     object-fit: cover;
+}
+
+/* Narrow layout - applied when card width is less than 100px */
+.cardNarrow {
+    width: 80px;
+    height: 140px;
+    padding: 4px;
+}
+
+.cardNarrow img {
+    width: 60px;
+    height: 60px;
+}
+
+.cardNarrow .name,
+.cardNarrow .title {
+    font-size: 0.75rem;
+    margin: 2px 0;
 }
