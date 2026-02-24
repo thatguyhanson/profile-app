@@ -10,10 +10,10 @@ import Header from './components/Header'
 import ModeContext from './context/ModeContext';
 import ProfileContext from './context/ProfileContext';
 
-// Pages - eagerly loaded
+// Pages
 import Home from './pages/HomePage'
 
-// Pages - lazily loaded for code-splitting
+// Pages - Lazy Load
 const AddProfile = lazy(() => import('./pages/AddProfile'));
 const OtherProfiles = lazy(() => import('./pages/OtherProfiles'));
 const About = lazy(() => import('./pages/About'));

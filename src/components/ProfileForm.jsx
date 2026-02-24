@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const stripTags = (s) => String(s ?? "").replace(/<\/?[^>]+>/g, "");
 const trimCollapse = (s) => String(s ?? "").trim().replace(/\s+/g, " ");
 
-// Reducer function to manage complex form state
 const formReducer = (state, action) => {
     switch (action.type) {
         case 'UPDATE_FIELD':
