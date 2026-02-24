@@ -1,0 +1,1 @@
+import{r,c as s,j as o,W as a}from"./index-Dlk_Lmkc.js";const c=r.memo(()=>{const t=s.c(1);let e;return t[0]===Symbol.for("react.memo_cache_sentinel")?(e=o.jsxs(a,{id:"about",children:[o.jsx("h2",{children:"About"}),o.jsx("p",{children:"Welcome to the my profile app."})]}),t[0]=e):e=t[0],e});c.displayName="About";export{c as default};
