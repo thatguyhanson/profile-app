@@ -1,9 +1,9 @@
+import { memo } from 'react';
 import Wrapper from '../components/Wrapper';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-export default function ProfileDetailPage() {
-
+const ProfileDetailPage = memo(() => {
     const { id } = useParams();
     const [profile, setProfile] = useState({ name: "", title: "", email: "", bio: "", image: null });
 
@@ -26,4 +26,8 @@ export default function ProfileDetailPage() {
                 <p>Profile does not exist.</p>
             </Wrapper> )
     );
-};
+});
+
+ProfileDetailPage.displayName = 'ProfileDetailPage';
+
+export default ProfileDetailPage;

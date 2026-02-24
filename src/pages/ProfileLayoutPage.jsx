@@ -1,8 +1,8 @@
+import { memo } from 'react';
 import { Outlet, Link } from "react-router-dom"
 import Wrapper from "../components/Wrapper"
 
-export default function ProfileLayoutPage() {
-
+const ProfileLayoutPage = memo(() => {
     return (
         <>
             <Outlet />
@@ -11,4 +11,8 @@ export default function ProfileLayoutPage() {
             </Wrapper>
         </>
     );
-}
+});
+
+ProfileLayoutPage.displayName = 'ProfileLayoutPage';
+
+export default ProfileLayoutPage;

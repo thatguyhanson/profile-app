@@ -1,5 +1,5 @@
 // React
-import { useState, useContext } from 'react'
+import { useState, useContext, useCallback, useMemo, lazy, Suspense } from 'react'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 
 // Components
@@ -10,14 +10,23 @@ import Header from './components/Header'
 import ModeContext from './context/ModeContext';
 import ProfileContext from './context/ProfileContext';
 
-// Pages
+// Pages - eagerly loaded
 import Home from './pages/HomePage'
-import AddProfile from './pages/AddProfile';
-import OtherProfiles from './pages/OtherProfiles';
-import About from './pages/About';
-import NotFound from './pages/NotFound';
-import ProfileDetailPage from './pages/ProfileDetailPage'
-import ProfileLayoutPage from './pages/ProfileLayoutPage'
+
+// Pages - lazily loaded for code-splitting
+const AddProfile = lazy(() => import('./pages/AddProfile'));
+const OtherProfiles = lazy(() => import('./pages/OtherProfiles'));
+const About = lazy(() => import('./pages/About'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const ProfileDetailPage = lazy(() => import('./pages/ProfileDetailPage'));
+const ProfileLayoutPage = lazy(() => import('./pages/ProfileLayoutPage'));
+
+// Loading fallback component
+const LoadingFallback = () => (
+    <Wrapper>
+        <p>Loading...</p>
+    </Wrapper>
+);
 
 // Styles
 import './App.css'
@@ -25,29 +34,36 @@ import './App.css'
 function App() {
     
     const { profiles } = useContext(ProfileContext);
-    const titles = [...new Set(profiles.map(profile => profile.title))];
+    
+    const titles = useMemo(() => 
+        [...new Set(profiles.map(profile => profile.title))], 
+        [profiles]
+    );
 
     const [title, setTitle] = useState("");
     const [name, setName] = useState("");
 
-    const handleChange = (event) => {
+    const handleChange = useCallback((event) => {
         setTitle(event.target.value);
-    }
+    }, []);
 
-    const handleSearch = (event) => {
+    const handleSearch = useCallback((event) => {
         setName(event.target.value);
-    }
+    }, []);
 
-    const handleClear = () => {
+    const handleClear = useCallback(() => {
         setTitle("");
         setName("");
 
         document.getElementById('title').value = '';
         document.getElementById('search').value = '';
-    }
+    }, []);
 
-    const filteredProfiles = profiles.filter(profile =>
-        (profile.title === title || !title) && (profile.name.toLowerCase().includes(name.toLowerCase()) || !name)
+    const filteredProfiles = useMemo(() => 
+        profiles.filter(profile =>
+            (profile.title === title || !title) && (profile.name.toLowerCase().includes(name.toLowerCase()) || !name)
+        ),
+        [profiles, title, name]
     );
 
     const {styles} = useContext(ModeContext);
@@ -59,17 +75,19 @@ function App() {
                     <Header/>
                 </Wrapper>
 
-                <Routes>
-                    <Route path="/" element={<Home profiles={filteredProfiles} />} />
-                    <Route path="/fetched-profiles" element={<OtherProfiles />} />
-                    <Route path="/fetched-profiles/profile" element={<ProfileLayoutPage />}>
-                        <Route path=":id" element={<ProfileDetailPage />} />
-                    </Route>
-                    <Route path="/add-profile" element={<AddProfile />} />
-                    <Route path="/about" element={<About />} />
+                <Suspense fallback={<LoadingFallback />}>
+                    <Routes>
+                        <Route path="/" element={<Home profiles={filteredProfiles} />} />
+                        <Route path="/fetched-profiles" element={<OtherProfiles />} />
+                        <Route path="/fetched-profiles/profile" element={<ProfileLayoutPage />}>
+                            <Route path=":id" element={<ProfileDetailPage />} />
+                        </Route>
+                        <Route path="/add-profile" element={<AddProfile />} />
+                        <Route path="/about" element={<About />} />
 
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </Suspense>
 
                 <footer className="footer">
                     <p>Permissions granted for all images used.</p>

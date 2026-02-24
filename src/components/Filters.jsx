@@ -1,4 +1,6 @@
-const Filters = ({ titles, title, name, handleChange, handleSearch, handleClick }) => {
+import { memo } from 'react';
+
+const Filters = memo(({ titles, title, name, handleChange, handleSearch, handleClick }) => {
 
     return (
         <div className="filters">
@@ -18,5 +20,8 @@ const Filters = ({ titles, title, name, handleChange, handleSearch, handleClick 
             <button onClick={handleClick}>Clear</button>
         </div>
     );
-}
+});
+
+Filters.displayName = 'Filters';
+
 export default Filters;

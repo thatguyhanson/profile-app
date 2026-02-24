@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import styles from './header.module.css';
-import { useContext } from 'react';
+import { useContext, memo } from 'react';
 import ModeContext from '../context/ModeContext';
 
-export default function Header() {
+const Header = memo(function Header() {
     const { styles: theme, toggleStyles } = useContext(ModeContext);
 
     return (
@@ -21,4 +21,6 @@ export default function Header() {
             </nav>
         </header>
     );
-}
+});
+
+export default Header;

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useMemo, useCallback } from "react";
 import hanson from '../assets/hanson.png';
 import mako from '../assets/mako.jpg';
 import milo from '../assets/milo.jpeg';
@@ -22,12 +22,14 @@ export const ProfileProvider = ({ children }) => {
         { id: 5, name: "Dr. House", title: "Cat Owner", email: "", bio: "", image: kat }
     ]);
 
-    const addProfile = (newProfile) => {
+    const addProfile = useCallback((newProfile) => {
         setProfiles(prev => [...prev, newProfile]);
-    };
+    }, []);
+
+    const value = useMemo(() => ({ profiles, addProfile }), [profiles, addProfile]);
 
     return (
-        <ProfileContext.Provider value={{ profiles, addProfile }}>
+        <ProfileContext.Provider value={value}>
             {children}
         </ProfileContext.Provider>
     );

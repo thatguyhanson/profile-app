@@ -1,4 +1,6 @@
-const Wrapper = ({ children, id }) => {
+import { memo } from 'react';
+
+const Wrapper = memo(({ children, id }) => {
     return (
         <div className="section" id={id}>
             <div className="container">
@@ -6,6 +8,8 @@ const Wrapper = ({ children, id }) => {
             </div>
         </div>
     );
-}
+});
+
+Wrapper.displayName = 'Wrapper';
 
 export default Wrapper;

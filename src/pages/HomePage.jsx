@@ -1,18 +1,17 @@
+import { memo } from 'react';
 import Introduction from '../components/Introduction';
 import Wrapper from '../components/Wrapper';
-import Card from '../components/Card';
+import ProfileGrid from '../components/ProfileGrid';
 
-const Home = ( {profiles} ) => {
+const Home = memo(({ profiles }) => {
     return (
         <Wrapper id="home">
             <Introduction />
-            <div className="grids">
-            {profiles.map(profile => (
-                <Card key={profile.id} {...profile} />
-            ))}
-            </div>
+            <ProfileGrid profiles={profiles} />
         </Wrapper>
     );
-}
+});
+
+Home.displayName = 'Home';
 
 export default Home;
